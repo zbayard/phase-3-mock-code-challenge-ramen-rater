@@ -5,8 +5,8 @@
       "name": "Shoyu Ramen",
       "restaurant": "Nonono",
       "image": "./assets/ramen/shoyu.jpg",
-      "rating": "10",
-      "comment": "THE BEST"
+      "rating": "9",
+      "comment": "yum"
     },
     {
       "id": 2,
@@ -14,7 +14,7 @@
       "restaurant": "Naruto",
       "image": "./assets/ramen/naruto.jpg",
       "rating": "10",
-      "comment": "TEST"
+      "comment": "WE GOT IT"
     },
     {
       "id": 3,
