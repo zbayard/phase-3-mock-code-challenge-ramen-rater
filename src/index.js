@@ -19,6 +19,10 @@ function renderRamen(ramenObj){
     
 
     ramenPic.addEventListener("click", ()=> {
+        fetch(`http://localhost:3000/ramens/${ramenObj.id}`)
+        .then(response => response.json())
+        .then(ramenObj => { 
+        
         ramenImg.src = ramenObj.image
         ramenImg.alt = ramenObj.name
 
@@ -30,7 +34,9 @@ function renderRamen(ramenObj){
         commentLabel.innerHTML = `Comment: ${ramenObj.comment}`
 
         ratingForm.dataset.id = ramenObj.id
-            
+        
+        
+        })
     })
 
     
@@ -41,8 +47,8 @@ function renderRamen(ramenObj){
             const ratingInput = e.target.rating.value
             const commentInput = e.target.comment.value
     
-            ratingLabel.innerHTML = `Rating: ${ratingInput}`
-            commentLabel.innerHTML = `Comment: ${commentInput}`
+            // ratingLabel.innerHTML = `Rating: ${ratingInput}`
+            // commentLabel.innerHTML = `Comment: ${commentInput}`
             
 
             fetch(`http://localhost:3000/ramens/${ratingForm.dataset.id}`, {
@@ -57,11 +63,11 @@ function renderRamen(ramenObj){
             })
             .then(response => response.json())
             .then(data => {
-                ratingLabel.innerHTML = `Rating: ${ratingInput}`
+                ratingLabel.innerHTML = `Rating: ${data.rating}`
         
-                commentLabel.innerHTML = `Comment: ${commentInput}`
+                commentLabel.innerHTML = `Comment: ${data.comment}`
                  
-
+                
                 ratingForm.reset()
             console.log('Success:', data);
             })
@@ -69,6 +75,9 @@ function renderRamen(ramenObj){
     
     
         })
+
+
+        
 
         
 
@@ -81,6 +90,37 @@ function renderRamen(ramenObj){
 
 }
 
+ratingForm.addEventListener("submit", e => {
+    e.preventDefault()
+    
+    const ratingInput = e.target.rating.value
+    const commentInput = e.target.comment.value
+
+    // ratingLabel.innerHTML = `Rating: ${ratingInput}`
+    // commentLabel.innerHTML = `Comment: ${commentInput}`
+    
+
+    fetch(`http://localhost:3000/ramens/${ratingForm.dataset.id}`, {
+    method: 'PATCH',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        rating: ratingInput,
+        comment: commentInput
+    }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        ratingLabel.innerHTML = `Rating: ${data.rating}`
+
+        commentLabel.innerHTML = `Comment: ${data.comment}`
+         
+        
+        ratingForm.reset()
+    console.log('Success:', data);
+    })
+})
 
 fetch(`http://localhost:3000/ramens`)
 .then(response => response.json())
@@ -101,4 +141,3 @@ fetch(`http://localhost:3000/ramens`)
 
 
 
-// ***TAKING A 5 MIN BREAK*********
